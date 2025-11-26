@@ -6,6 +6,7 @@
     poster?: string; // For video thumbnails
     title: string;
     category?: string;
+    link?: string; // Optional link to a detailed page
   }
 
   let { items = [] } = $props<{ items: Highlight[] }>();
@@ -90,9 +91,23 @@
             {/if}
             
             {#if item.category}
-                <span class="absolute top-3 left-3 bg-[#D4AF37] text-[#1E293B] text-xs font-bold px-2 py-1 rounded shadow-sm uppercase tracking-wider">
+                <span class="absolute top-3 left-3 bg-[#D4AF37] text-[#1E293B] text-xs font-bold px-2 py-1 rounded shadow-sm uppercase tracking-wider z-10">
                     {item.category}
                 </span>
+            {/if}
+
+            {#if item.link}
+                <a 
+                    href={item.link}
+                    class="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover/card:opacity-100 transition-all duration-300 cursor-pointer z-20 backdrop-blur-[2px]"
+                >
+                    <div class="bg-[#D4AF37] text-[#1E293B] font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-300 flex items-center gap-2">
+                        <span>Read Story</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                            <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </a>
             {/if}
         </div>
         
