@@ -1,16 +1,17 @@
 ---
 title: "Baptism Sunday 2025: A New Beginning"
-description: "Celebrating the 25 individuals who publicly declared their faith in Christ this past Sunday. A day filled with joy, tears, and the Holy Spirit."
-date: 2025-02-28
-author: "Pastor Eddie Mulenga"
-image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop"
+description: "Celebrating the 6 individuals who publicly declared their faith in Christ this past Sunday. A day filled with joy, tears, and the Holy Spirit."
+date: 2025-11-02
+author: "Bishop Dr Eddie Mulenga"
+image: "/bpt11.jpg"
 ---
 
 import { Image } from 'astro:assets';
+import ImageLightbox from '../../components/ui/ImageLightbox.svelte';
 
 # A Day of Celebration
 
-What an incredible Sunday we had! The atmosphere was charged with expectancy as we gathered to witness **25 precious souls** take the step of water baptism.
+What an incredible Sunday we had! The atmosphere was charged with expectancy as we gathered to witness **6 precious souls** take the step of water baptism.
 
 Baptism is an outward sign of an inward grace. It is a public declaration that "I have decided to follow Jesus; no turning back, no turning back."
 
@@ -24,22 +25,65 @@ We were reminded that the water isn't magic, but the *obedience* is powerful. Go
 
 ## Photo Gallery
 
-Here are some of the beautiful moments captured by our media team.
+Here are the beautiful moments captured by our media team. Click on any photo to view it full size.
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
-  <div class="aspect-video bg-stone-100 rounded-lg overflow-hidden">
-    <img 
-        src="https://images.unsplash.com/photo-1515162305285-0293e4767cc2?q=80&w=2071&auto=format&fit=crop" 
-        alt="Joyful celebration" 
-        class="w-full h-full object-cover"
-    />
+<div class="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4 my-8">
+  {/* Image 1: Portrait - Preparation */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt1.jpg" alt="Preparation behind the scenes" />
   </div>
-  <div class="aspect-video bg-stone-100 rounded-lg overflow-hidden">
-    <img 
-        src="https://images.unsplash.com/photo-1501554728187-ce583f39d99f?q=80&w=2070&auto=format&fit=crop" 
-        alt="Worship moment" 
-        class="w-full h-full object-cover"
-    />
+  
+  {/* Image 2: Landscape - Worship */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt2.jpg" alt="Worship before the service" />
+  </div>
+
+  {/* Image 3: Portrait - The Plunge */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt3.jpg" alt="A life transformed in the water" />
+  </div>
+
+  {/* Image 4: Landscape - Congregation */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt4.jpg" alt="The congregation celebrating" />
+  </div>
+
+  {/* Image 5: Portrait - Joy */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt5.jpg" alt="Pure joy after baptism" />
+  </div>
+
+  {/* Image 6: Landscape - Prayer */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt6.jpg" alt="Prayer for the new believers" />
+  </div>
+
+  {/* Image 7: Portrait - Celebration */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt7.jpg" alt="Celebrating with family" />
+  </div>
+
+  {/* Image 8: Landscape - Water */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt8.jpg" alt="The baptismal pool" />
+  </div>
+
+  {/* Image 9: Portrait - Hands Raised */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt9.jpg" alt="Hands raised in surrender" />
+  </div>
+
+  {/* Image 10: Landscape - Group Shot */}
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt10.jpg" alt="Group photo of the candidates" />
+  </div>
+  
+  <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 bg-stone-100 p-8 flex items-center justify-center text-center shadow-sm">
+    <p class="font-serif text-[#D4AF37] italic text-xl">"I have decided to follow Jesus..."</p>
+  </div>
+
+   <div class="break-inside-avoid rounded-xl overflow-hidden border border-stone-200 shadow-sm">
+    <ImageLightbox client:load src="/bpt12.jpg" alt="Smiles all around" />
   </div>
 </div>
 

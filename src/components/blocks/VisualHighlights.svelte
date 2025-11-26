@@ -75,7 +75,7 @@
       <div class="flex-none w-[85vw] md:w-[400px] snap-center group/card relative bg-white rounded-lg overflow-hidden shadow-sm border border-stone-100">
         <div class="aspect-[4/3] bg-slate-100 relative overflow-hidden">
             {#if item.type === 'video'}
-                <img src={item.poster || item.src} alt={item.title} class="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105" />
+                <img src={item.poster || item.src} alt={item.title} class="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105" loading="lazy" decoding="async" />
                 <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/card:bg-black/10 transition-colors">
                     <div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center pl-1 shadow-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-stone-900">
@@ -87,7 +87,7 @@
                     VIDEO
                 </span>
             {:else}
-                <img src={item.src} alt={item.title} class="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105" />
+                <img src={item.src} alt={item.title} class="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105" loading="lazy" decoding="async" />
             {/if}
             
             {#if item.category}
@@ -99,11 +99,11 @@
             {#if item.link}
                 <a 
                     href={item.link}
-                    class="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover/card:opacity-100 transition-all duration-300 cursor-pointer z-20 backdrop-blur-[2px]"
+                    class="absolute bottom-3 right-3 z-20"
                 >
-                    <div class="bg-[#D4AF37] text-[#1E293B] font-bold px-6 py-2 rounded-full shadow-lg transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-300 flex items-center gap-2">
+                    <div class="bg-white/95 backdrop-blur-sm text-stone-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-md hover:bg-[#D4AF37] hover:text-white transition-colors duration-300 flex items-center gap-1">
                         <span>Read Story</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3">
                             <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
                         </svg>
                     </div>

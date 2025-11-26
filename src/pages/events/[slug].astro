@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import SanctuaryLayout from '../../layouts/SanctuaryLayout.astro';
 
+import ImageLightbox from '../../components/ui/ImageLightbox.svelte';
+
 export async function getStaticPaths() {
   const events = await getCollection('events');
   return events.map(entry => ({
@@ -77,12 +79,8 @@ const { Content } = await render(entry);
         </header>
 
         {entry.data.image && (
-          <div class="aspect-video mb-8 rounded-xl overflow-hidden bg-stone-200">
-            <img
-              class="w-full h-full object-cover"
-              src={entry.data.image}
-              alt={entry.data.title}
-            />
+          <div class="aspect-video mb-8 rounded-xl overflow-hidden bg-stone-200 shadow-sm">
+            <ImageLightbox client:load src={entry.data.image} alt={entry.data.title} />
           </div>
         )}
 
