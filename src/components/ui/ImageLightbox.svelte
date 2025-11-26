@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  let { src, alt } = $props<{ src: string, alt: string }>();
+  let { src, alt, children } = $props<{ src: string, alt: string, children?: any }>();
 
   let isOpen = $state(false);
   let scale = $state(1);
@@ -91,7 +91,7 @@
     class="block w-full h-full cursor-zoom-in overflow-hidden relative group"
     aria-label={`View full size image: ${alt}`}
 >
-    <img {src} {alt} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
+    {@render children?.()}
     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white drop-shadow-md">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
@@ -132,17 +132,23 @@
             class="relative w-full h-full flex items-center justify-center overflow-hidden"
             onclick={(e) => e.stopPropagation()}
         >
-             <img 
-                {src} 
-                {alt} 
-                class="max-w-full max-h-full object-contain transition-transform duration-100 ease-out select-none"
-                style="transform: scale({scale}) translate({translateX}px, {translateY}px); cursor: {scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'}"
+            <!-- Wrapper div for handling drag events -->
+            <div
+                class="relative flex items-center justify-center w-full h-full"
                 onmousedown={handleMouseDown}
                 onmousemove={handleMouseMove}
                 onmouseup={handleMouseUp}
                 onmouseleave={handleMouseUp}
                 ondragstart={(e) => e.preventDefault()}
-             />
+                style="cursor: {scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'}"
+            >
+                <img 
+                    {src} 
+                    {alt} 
+                    class="max-w-full max-h-full object-contain transition-transform duration-100 ease-out select-none"
+                    style="transform: scale({scale}) translate({translateX}px, {translateY}px);"
+                />
+            </div>
         </div>
         
         <!-- Caption -->
