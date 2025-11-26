@@ -1,0 +1,48 @@
+---
+import { getCollection, render } from 'astro:content';
+import SanctuaryLayout from '../../layouts/SanctuaryLayout.astro';
+
+export async function getStaticPaths() {
+  const newsletters = await getCollection('newsletters');
+  return newsletters.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<SanctuaryLayout title={entry.data.title}>
+  <div class="bg-stone-50 py-12 sm:py-24">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <a href="/newsletters" class="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors mb-8 text-sm font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+          <path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd" />
+        </svg>
+        Back to Newsletters
+      </a>
+      <article class="prose prose-stone prose-lg mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-stone-200">
+        <header class="mb-8 not-prose border-b border-stone-100 pb-8">
+            <div class="text-sm font-bold text-[#D4AF37] uppercase tracking-wide mb-2">
+                Newsletter
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl mb-4">
+                {entry.data.title}
+            </h1>
+            <div class="flex items-center gap-4 text-stone-500 text-sm">
+                <time datetime={entry.data.date.toISOString()}>
+                    {entry.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                </time>
+                <span>•</span>
+                <span>{entry.data.author || "Liberty Christian Center"}</span>
+            </div>
+        </header>
+
+        <div class="newsletter-content">
+             <Content />
+        </div>
+      </article>
+    </div>
+  </div>
+</SanctuaryLayout>

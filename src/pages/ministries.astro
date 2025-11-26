@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import SanctuaryLayout from "../layouts/SanctuaryLayout.astro";
+import Card from "../components/ui/Card.astro";
+
+const ministries = await getCollection("ministries");
+// Ministries might not have a date, so no special sorting is applied by default
+---
+
+<SanctuaryLayout title="Ministries">
+  <div class="bg-stone-50 min-h-screen py-12 sm:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h1
+          class="text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl font-serif mb-4"
+        >
+          Our Ministries
+        </h1>
+        <p class="text-lg text-stone-600 max-w-2xl mx-auto">
+          Discover the various ministries at Liberty Christian Center designed
+          to serve, equip, and connect our community.
+        </p>
+      </div>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+        {
+          ministries.length === 0 ? (
+            <p class="col-span-full text-center text-stone-600 text-lg">No ministries found at the moment. Please check back later!</p>
+          ) : (
+            ministries.map((ministry) => (
+              <Card href={`/ministries/${ministry.slug}`}>
+                {/* No image field in current schema, but can be added */}
+                 <div slot="image" class="aspect-video bg-stone-800 flex items-center justify-center text-stone-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25m0 0l-3 3m3-3l3 3m-9-6.75V10.5a3 3 0 013-3h6a3 3 0 013 3v2.25m-10.5 6l2.25-2.25m3-3l2.25-2.25M3 18.75l2.25-2.25m3-3l2.25-2.25" />
+                    </svg>
+                </div>
+
+                <div class="flex flex-col h-full">
+                  <h3 class="text-xl font-bold text-stone-900 mb-2 line-clamp-2">
+                    {ministry.data.title}
+                  </h3>
+                  <p class="text-sm text-stone-700 line-clamp-3 mb-4">
+                    {ministry.data.description}
+                  </p>
+                   {ministry.data.leader && (
+                     <div class="text-sm text-stone-600 flex items-center gap-2 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                            <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+                        </svg>
+                        Leader: {ministry.data.leader}
+                    </div>
+                  )}
+                  {ministry.data.meeting_time && (
+                     <div class="text-sm text-stone-600 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                        </svg>
+                        {ministry.data.meeting_time}
+                    </div>
+                  )}
+                </div>
+              </Card>
+            ))
+          )
+        }
+      </div>
+    </div>
+  </div>
+</SanctuaryLayout>

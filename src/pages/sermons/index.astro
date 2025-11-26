@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import SanctuaryLayout from "../../layouts/SanctuaryLayout.astro";
+import SermonArchive from "../../components/blocks/SermonArchive.svelte";
+
+const sermons = await getCollection("sermons");
+const sortedSermons = sermons.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<SanctuaryLayout title="Sermons">
+  <div class="bg-stone-50 min-h-screen py-12 sm:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h1
+          class="text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl font-serif mb-4"
+        >
+          Sermon Archive
+        </h1>
+        <p class="text-lg text-stone-600 max-w-2xl mx-auto">
+          Explore our library of messages. Listen, watch, and grow in your faith
+          with biblical teaching from Liberty Christian Center.
+        </p>
+      </div>
+
+      <SermonArchive client:load sermons={sortedSermons} />
+    </div>
+  </div>
+</SanctuaryLayout>

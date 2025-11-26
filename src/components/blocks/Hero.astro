@@ -1,0 +1,67 @@
+---
+import Button from '../ui/Button.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  backgroundImage: string;
+  ctaText?: string;
+  ctaLink?: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
+}
+
+const { 
+  title, 
+  subtitle, 
+  backgroundImage, 
+  ctaText, 
+  ctaLink,
+  secondaryCtaText,
+  secondaryCtaLink 
+} = Astro.props;
+---
+
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-900">
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src={backgroundImage} 
+      alt="Hero Background" 
+      class="w-full h-full object-cover opacity-50"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-slate-900/30"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center max-w-4xl px-6 mt-20">
+    {subtitle && (
+      <h2 class="text-[#D4A373] font-sans font-bold tracking-[0.2em] uppercase text-sm md:text-base mb-6 animate-fade-in">
+        {subtitle}
+      </h2>
+    )}
+    
+    <h1 class="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-8 drop-shadow-2xl text-balance">
+      <slot name="title">{title}</slot>
+    </h1>
+    
+    <div class="text-slate-200 text-lg md:text-xl font-sans max-w-2xl mx-auto mb-10 leading-relaxed opacity-90 text-balance">
+      <slot />
+    </div>
+    
+    {(ctaLink || secondaryCtaLink) && (
+      <div class="flex flex-col md:flex-row gap-4 justify-center">
+        {ctaLink && ctaText && (
+          <Button href={ctaLink} variant="primary" size="lg">
+            {ctaText}
+          </Button>
+        )}
+        {secondaryCtaLink && secondaryCtaText && (
+          <Button href={secondaryCtaLink} variant="outline" size="lg">
+            {secondaryCtaText}
+          </Button>
+        )}
+      </div>
+    )}
+  </div>
+</section>

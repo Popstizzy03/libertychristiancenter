@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  /* THE SANCTUARY PALETTE */
+  --color-primary: #1E293B;
+  /* Deep Navy (Text) */
+  --color-secondary: #5D3A9B;
+  /* Royal Purple (Headings/Accents) */
+  --color-accent: #D4AF37;
+  /* Classic Gold (Highlights/Buttons) */
+  --color-bg: #FDFCF8;
+  /* Warm Cream */
+  --color-surface: #F3F1E7;
+  /* Slightly darker cream for cards */
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  /* Typography Scale */
+  font-family: 'Inter', sans-serif;
+  /* Body text */
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Libre Baskerville', serif;
+  /* Elegant Headings */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-secondary);
+  /* Use Purple for headings */
+}
+
+/* Smooth Scrolling for "Plan a Visit" links */
+html {
+  scroll-behavior: smooth;
+}

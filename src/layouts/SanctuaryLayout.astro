@@ -1,0 +1,55 @@
+---
+import "../styles/global.css";
+import MegaMenu from "../components/navigation/MegaMenu.svelte"; // Svelte for interactivity
+import Footer from "../components/navigation/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Welcome to Liberty Christian Center" } =
+  Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Liberty Christian Center</title>
+    <meta name="description" content={description} />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <!-- Sticky Header -->
+    <header
+      class="sticky top-0 z-50 bg-[#FDFCF8]/95 backdrop-blur-md border-b border-stone-200"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between"
+      >
+        <a
+          href="/"
+          class="font-serif text-2xl font-bold tracking-tight text-slate-900"
+        >
+          LIBERTY<span class="text-[#D4AF37]">.</span>CENTER
+        </a>
+
+        <!-- Svelte Component for Mobile/Desktop Menu -->
+        <MegaMenu client:load />
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

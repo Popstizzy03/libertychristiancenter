@@ -1,0 +1,22 @@
+---
+const schedule = [
+  { name: "Sunday First Service", time: "07:00 AM" },
+  { name: "Sunday Second Service", time: "09:15 AM" },
+  { name: "Midweek Bible Study", time: "Wed 05:00 PM" }
+];
+---
+
+<div class="mt-10 bg-[#1E293B] text-white p-8 rounded-sm bg-[url('/pattern.png')] relative overflow-hidden">
+  <!-- Decorative element -->
+  <div class="absolute top-0 right-0 w-32 h-32 bg-[#D4A373]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+  
+  <h4 class="font-serif text-xl font-bold mb-4 text-[#D4A373] relative z-10">Weekly Rhythm</h4>
+  <ul class="space-y-3 font-sans text-sm opacity-90 relative z-10">
+    {schedule.map(item => (
+      <li class="flex justify-between border-b border-slate-700 pb-2 last:border-0 last:pb-0">
+        <span>{item.name}</span>
+        <span class="font-bold text-[#D4A373]">{item.time}</span>
+      </li>
+    ))}
+  </ul>
+</div>

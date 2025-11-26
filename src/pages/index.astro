@@ -1,16 +1,90 @@
 ---
+import SanctuaryLayout from '../layouts/SanctuaryLayout.astro';
+import { getCollection } from 'astro:content';
+import Hero from '../components/blocks/Hero.astro';
+import Section from '../components/ui/Section.astro';
+import EventRow from '../components/blocks/EventRow.astro';
+import ServiceTimes from '../components/blocks/ServiceTimes.astro';
+import SermonGrid from '../components/blocks/SermonGrid.astro';
 
+// 1. DATA FETCHING STRATEGY
+// We filter and sort data here so the view layer remains clean.
+
+// Get Upcoming Events (Future dates only, sorted ascending)
+const now = new Date();
+const allEvents = await getCollection('events');
+const upcomingEvents = allEvents
+  .filter(e => e.data.date >= now) 
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
+  .slice(0, 3);
+
+// Get Latest Sermon (Sorted descending)
+const allSermons = await getCollection('sermons');
+const latestSermon = allSermons.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Liberty Christian Center</title>
-	</head>
-	<body>
-		<h1>Liberty Christian Center</h1>
-	</body>
-</html>
+<SanctuaryLayout title="Home">
+  
+  <!-- HERO SECTION -->
+  <Hero 
+    title="A Place to Belong, Believe, and Become."
+    subtitle="Welcome Home"
+    backgroundImage="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop"
+    ctaText="Plan Your Visit"
+    ctaLink="/visit"
+    secondaryCtaText="Watch Online"
+    secondaryCtaLink="/sermons"
+  >
+    We exist to help you discover your purpose and experience the life-changing power of community.
+  </Hero>
+
+  <!-- MISSION STATEMENT -->
+  <Section background="white" class="text-center">
+    <div class="max-w-3xl mx-auto">
+      <h3 class="font-serif text-3xl md:text-4xl text-[#1E293B] mb-6 font-bold">We are Liberty Christian Center</h3>
+      <p class="font-sans text-lg text-slate-600 leading-relaxed mb-10">
+        Whether you are new to faith, looking for a new church home, or just asking questions, there is a seat saved for you here. We believe in authentic community and practical biblical teaching.
+      </p>
+      <div class="h-1 w-20 bg-[#D4A373] mx-auto rounded-full"></div>
+    </div>
+  </Section>
+
+  <!-- CONTENT GRID: Sermons & Events -->
+  <Section background="cream">
+    <div class="grid lg:grid-cols-2 gap-16">
+      
+      <!-- LATEST SERMON BLOCK -->
+      <div>
+        <div class="flex items-center justify-between mb-8">
+          <h3 class="font-serif text-3xl text-[#1E293B] font-bold">Latest Message</h3>
+          <a href="/sermons" class="text-sm font-bold text-[#D4A373] hover:text-[#1E293B] uppercase tracking-wide transition-colors">View Archive →</a>
+        </div>
+
+        <SermonGrid sermon={latestSermon} />
+      </div>
+
+      <!-- UPCOMING EVENTS LIST -->
+      <div>
+        <div class="flex items-center justify-between mb-8">
+          <h3 class="font-serif text-3xl text-[#1E293B] font-bold">Upcoming Events</h3>
+          <a href="/events" class="text-sm font-bold text-[#D4A373] hover:text-[#1E293B] uppercase tracking-wide transition-colors">Full Calendar →</a>
+        </div>
+
+        <div class="space-y-6">
+          {upcomingEvents.length > 0 ? upcomingEvents.map(event => (
+            <EventRow event={event} />
+          )) : (
+            <div class="p-6 bg-white rounded-sm shadow-sm">
+              <p class="text-slate-500 italic">No upcoming events scheduled at this time.</p>
+            </div>
+          )}
+        </div>
+        
+        <!-- Weekly Schedule Box -->
+        <ServiceTimes />
+
+      </div>
+    </div>
+  </Section>
+
+</SanctuaryLayout>

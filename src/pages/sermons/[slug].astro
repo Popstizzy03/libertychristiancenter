@@ -1,0 +1,108 @@
+---
+import { getCollection, render } from 'astro:content';
+import SanctuaryLayout from '../../layouts/SanctuaryLayout.astro';
+
+import AudioPlayer from "../../components/ui/AudioPlayer.svelte";
+
+export async function getStaticPaths() {
+  const sermons = await getCollection('sermons');
+  return sermons.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<SanctuaryLayout title={entry.data.title}>
+  <div class="bg-stone-50 py-12 sm:py-24">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <a href="/sermons" class="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors mb-8 text-sm font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+          <path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd" />
+        </svg>
+        Back to Sermons
+      </a>
+      <article class="prose prose-stone prose-lg mx-auto">
+        <header class="mb-8 not-prose">
+            <div class="text-sm font-semibold leading-6 text-[#D4AF37] uppercase tracking-wide mb-2">
+                {entry.data.series || "Sermon"}
+            </div>
+            {entry.data.messageTitle && (
+              <h1 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl mb-2">
+                {entry.data.messageTitle}
+              </h1>
+            )}
+            <h2 class="text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl mb-4">
+                {entry.data.title}
+            </h2>
+            {entry.data.subtitle && (
+              <p class="text-xl text-stone-700 mb-4">{entry.data.subtitle}</p>
+            )}
+            <div class="flex flex-wrap gap-4 text-stone-600 text-sm border-b border-stone-200 pb-6">
+                <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                    </svg>
+                    <time datetime={entry.data.date.toISOString()}>
+                        {entry.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    </time>
+                </div>
+                <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                        <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+                    </svg>
+                    {entry.data.preacher}
+                </div>
+                 <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                       <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A9.948 9.948 0 0 0 10 18a9.948 9.948 0 0 0 4.793-3.61A5.99 5.99 0 0 0 10 12Z" clip-rule="evenodd" />
+                    </svg>
+                    {entry.data.scripture}
+                </div>
+            </div>
+            {entry.data.description && (
+              <p class="mt-6 text-lg text-stone-700">{entry.data.description}</p>
+            )}
+        </header>
+
+        {entry.data.youtube_id && (
+          <div class="aspect-video mb-8 rounded-xl overflow-hidden bg-black">
+            <iframe
+              class="w-full h-full"
+              src={`https://www.youtube.com/embed/${entry.data.youtube_id}`}
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        )}
+
+        {entry.data.audio_file && (
+             <div class="mb-8 not-prose">
+                <AudioPlayer 
+                  client:load 
+                  src={entry.data.audio_file} 
+                  title={entry.data.title} 
+                />
+            </div>
+        )}
+
+        <Content />
+
+        {entry.data.lessons && entry.data.lessons.length > 0 && (
+          <div class="mt-12 pt-8 border-t border-stone-200 not-prose">
+            <h3 class="text-2xl font-bold tracking-tight text-stone-900 mb-4">Key Lessons</h3>
+            <ul class="list-disc list-inside space-y-2 text-stone-700">
+              {entry.data.lessons.map(lesson => (
+                <li>{lesson}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </article>
+    </div>
+  </div>
+</SanctuaryLayout>

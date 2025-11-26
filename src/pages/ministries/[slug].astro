@@ -1,0 +1,55 @@
+---
+import { getCollection, render } from 'astro:content';
+import SanctuaryLayout from '../../layouts/SanctuaryLayout.astro';
+
+export async function getStaticPaths() {
+  const ministries = await getCollection('ministries');
+  return ministries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<SanctuaryLayout title={entry.data.title}>
+  <div class="bg-stone-50 py-12 sm:py-24">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <a href="/ministries" class="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors mb-8 text-sm font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+          <path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd" />
+        </svg>
+        Back to Ministries
+      </a>
+      <article class="prose prose-stone prose-lg mx-auto bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+        <header class="mb-8 not-prose">
+            <h1 class="text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl mb-4">
+                {entry.data.title}
+            </h1>
+            <p class="text-lg text-stone-700 mb-4">{entry.data.description}</p>
+            <div class="flex flex-wrap gap-4 text-stone-600 text-sm border-b border-stone-200 pb-6">
+                {entry.data.leader && (
+                     <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-[#D4AF37]">
+                            <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+                        </svg>
+                        Leader: {entry.data.leader}
+                    </div>
+                )}
+                {entry.data.meeting_time && (
+                     <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-[#D4AF37]">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                        </svg>
+                        Meeting Time: {entry.data.meeting_time}
+                    </div>
+                )}
+            </div>
+        </header>
+
+        <Content />
+      </article>
+    </div>
+  </div>
+</SanctuaryLayout>
