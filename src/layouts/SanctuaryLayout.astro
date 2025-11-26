@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import MegaMenu from "../components/navigation/MegaMenu.svelte"; // Svelte for interactivity
 import Footer from "../components/navigation/Footer.astro";
+import { Image } from 'astro:assets'; // Import Image component
 
 interface Props {
   title: string;
@@ -19,6 +20,8 @@ const { title, description = "Welcome to Liberty Christian Center" } =
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | Liberty Christian Center</title>
     <meta name="description" content={description} />
+    <!-- Favicon -->
+    <link rel="icon" href="/logo.png" type="image/png" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -36,9 +39,12 @@ const { title, description = "Welcome to Liberty Christian Center" } =
       >
         <a
           href="/"
-          class="font-serif text-2xl font-bold tracking-tight text-slate-900"
+          class="flex items-center gap-2"
         >
-          LIBERTY<span class="text-[#D4AF37]">.</span>CENTER
+          <Image src="/logo.png" alt="Liberty Christian Center Logo" width={48} height={48} class="h-10 w-auto" loading="eager" />
+          <span class="font-serif text-2xl font-bold tracking-tight text-slate-900 hidden sm:inline">
+            LIBERTY<span class="text-[#D4AF37]">.</span>CENTER
+          </span>
         </a>
 
         <!-- Svelte Component for Mobile/Desktop Menu -->

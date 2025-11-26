@@ -6,6 +6,7 @@ import Section from '../components/ui/Section.astro';
 import EventRow from '../components/blocks/EventRow.astro';
 import ServiceTimes from '../components/blocks/ServiceTimes.astro';
 import SermonGrid from '../components/blocks/SermonGrid.astro';
+import VisualHighlights from '../components/blocks/VisualHighlights.svelte';
 
 // 1. DATA FETCHING STRATEGY
 // We filter and sort data here so the view layer remains clean.
@@ -21,13 +22,52 @@ const upcomingEvents = allEvents
 // Get Latest Sermon (Sorted descending)
 const allSermons = await getCollection('sermons');
 const latestSermon = allSermons.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0];
+
+// Sample Highlights Data
+const highlights = [
+  {
+    id: '1',
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop',
+    title: 'Community Outreach Day',
+    category: 'Service'
+  },
+  {
+    id: '2',
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format&fit=crop',
+    title: 'Sunday Worship Experience',
+    category: 'Worship'
+  },
+  {
+    id: '3',
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?q=80&w=1974&auto=format&fit=crop',
+    title: 'Youth Night: Glow Party',
+    category: 'Youth'
+  },
+  {
+    id: '4',
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop',
+    title: 'Baptism Sunday',
+    category: 'Milestone'
+  },
+  {
+    id: '5',
+    type: 'image',
+    src: 'https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=2070&auto=format&fit=crop',
+    title: 'New Members Class',
+    category: 'Fellowship'
+  }
+];
 ---
 
 <SanctuaryLayout title="Home">
   
   <!-- HERO SECTION -->
   <Hero 
-    title="A Place to Belong, Believe, and Become."
+    title="✦ Proclaim ✦ Nurture ✦ Release."
     subtitle="Welcome Home"
     backgroundImage="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop"
     ctaText="Plan Your Visit"
@@ -35,7 +75,8 @@ const latestSermon = allSermons.sort((a, b) => b.data.date.valueOf() - a.data.da
     secondaryCtaText="Watch Online"
     secondaryCtaLink="/sermons"
   >
-    We exist to help you discover your purpose and experience the life-changing power of community.
+    Join The Liberty Family with Bishop Dr. Eddie & Rev. Jane Mulenga for our weekly programs.
+    <h5>✦ We are located off Kasangula road behind Northgate police post, Lusaka, Zambia</h5>
   </Hero>
 
   <!-- MISSION STATEMENT -->
@@ -43,7 +84,8 @@ const latestSermon = allSermons.sort((a, b) => b.data.date.valueOf() - a.data.da
     <div class="max-w-3xl mx-auto">
       <h3 class="font-serif text-3xl md:text-4xl text-[#1E293B] mb-6 font-bold">We are Liberty Christian Center</h3>
       <p class="font-sans text-lg text-slate-600 leading-relaxed mb-10">
-        Whether you are new to faith, looking for a new church home, or just asking questions, there is a seat saved for you here. We believe in authentic community and practical biblical teaching.
+        Proclaiming The Lord's favour, nurturing and releasing ministries to the nations ✦
+        <h3>Luke 4:18</h3>
       </p>
       <div class="h-1 w-20 bg-[#D4A373] mx-auto rounded-full"></div>
     </div>
@@ -85,6 +127,11 @@ const latestSermon = allSermons.sort((a, b) => b.data.date.valueOf() - a.data.da
 
       </div>
     </div>
+  </Section>
+
+  <!-- HIGHLIGHTS SECTION -->
+  <Section background="white">
+    <VisualHighlights client:visible items={highlights} />
   </Section>
 
 </SanctuaryLayout>
